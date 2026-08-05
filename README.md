@@ -43,7 +43,7 @@ $$
 
 ## TODO
 
-- [ ] naive single-threaded CPU for-loop baseline
+- [x] naive single-threaded CPU for-loop baseline
 
 - [ ] CUDA naive global-memory implementation
 

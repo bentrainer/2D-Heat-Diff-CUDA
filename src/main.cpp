@@ -69,18 +69,17 @@ int main(int argc, char** argv) {
                 delta_t, steps
             );
         };
+    } else if (backend == "cuda-naive") {
+        solve_impl = [&](const std::vector<float>& T) {
+            return solve_cuda_naive(
+                T,
+                Nx, Ny, alpha,
+                delta_x, delta_y,
+                delta_t, steps,
+                block_size
+            );
+        };
     }
-    // } else if (backend == "cuda-naive") {
-    //     solve_impl = [&](const std::vector<float>& T) {
-    //         return solve_cuda_naive(
-    //             T,
-    //             Nx, Ny, alpha,
-    //             delta_x, delta_y,
-    //             delta_t, steps,
-    //             block_size
-    //         );
-    //     };
-    // }
 
     auto T_init = init_gaussian(Nx, Ny, width, height);
     auto result = solve_impl(T_init);
