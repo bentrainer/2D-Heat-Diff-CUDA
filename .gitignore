@@ -412,3 +412,5 @@ TSWLatexianTemp*
 
 figure/**
 !figure/.gitkeep
+
+build/**
