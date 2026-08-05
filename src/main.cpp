@@ -1,6 +1,11 @@
-#include <cassert>
+#include <cstddef>
+#include <functional>
+#include <stdexcept>
+#include <vector>
 
 #include "CLI11.hpp"
+#include "init_gaussian.hpp"
+#include "solver.hpp"
 
 
 int main(int argc, char** argv) {
@@ -36,8 +41,8 @@ int main(int argc, char** argv) {
         return app.exit(e);
     }
 
-    const float delta_x = width / (1.0f * (Nx-1));
-    const float delta_y = height / (1.0f * (Ny-1));
+    const float delta_x = width / static_cast<float>(Nx-1);
+    const float delta_y = height / static_cast<float>(Ny-1);
 
     if (alpha * delta_t * (1/(delta_x*delta_x) + 1/(delta_y*delta_y)) - 0.5f > 0) {
         delta_t = 0.5f / (alpha * (1/(delta_x*delta_x) + 1/(delta_y*delta_y))) / 2.0f;
@@ -51,6 +56,50 @@ int main(int argc, char** argv) {
               << "solve setup:   " << "delta_x=" << delta_x << ", delta_y=" << delta_y << "\n"
               << "               " << "alpha=" << alpha << ", delta_t=" << delta_t << ", steps=" << steps << "\n"
               << "verify?        " << (verify ? "YES" : "NO") << "\n";
+
+
+    std::function<SolvResult(const std::vector<float>&)> solve_impl;
+
+    if (backend == "cpu") {
+        solve_impl = [&](const std::vector<float>& T) {
+            return solve_cpu(
+                T,
+                Nx, Ny, alpha,
+                delta_x, delta_y,
+                delta_t, steps
+            );
+        };
+    }
+    // } else if (backend == "cuda-naive") {
+    //     solve_impl = [&](const std::vector<float>& T) {
+    //         return solve_cuda_naive(
+    //             T,
+    //             Nx, Ny, alpha,
+    //             delta_x, delta_y,
+    //             delta_t, steps,
+    //             block_size
+    //         );
+    //     };
+    // }
+
+    auto T_init = init_gaussian(Nx, Ny, width, height);
+    auto result = solve_impl(T_init);
+    auto T_solv = result.temperature;
+
+    if (verify && backend != "cpu") {
+        auto result = solve_cpu(
+            T_init,
+            Nx, Ny, delta_x, delta_y,
+            delta_t, alpha, steps
+        );
+        auto T_comp = result.temperature;
+
+        if (!all_close(T_solv, T_comp)) {
+            std::cerr << "!!!FAILED TO VERIFY!!!\n";
+        }
+    }
+
+    print_stats(result);
 
     return 0;
 }
