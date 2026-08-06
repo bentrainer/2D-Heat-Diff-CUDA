@@ -8,10 +8,10 @@ SolvResult solve_cpu(
     const std::vector<float>& T_init,
     std::size_t Nx,
     std::size_t Ny,
+    float alpha,
     float delta_x,
     float delta_y,
     float delta_t,
-    float alpha,
     std::size_t steps
 ) {
 

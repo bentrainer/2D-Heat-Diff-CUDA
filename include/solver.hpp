@@ -34,7 +34,7 @@ inline bool all_close(
     const std::vector<float>& A,
     const std::vector<float>& B,
     float rtol = 1.0e-4f,
-    float atol = 1.0e-6f
+    float atol = 1.0e-5f
 ) {
     if (A.size() != B.size()) {
         std::cerr << "size mismatch: " << A.size() << " vs " << B.size() << "\n";

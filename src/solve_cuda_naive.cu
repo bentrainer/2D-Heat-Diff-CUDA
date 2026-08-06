@@ -17,13 +17,15 @@ __global__ void solve_cuda_naive_kernel(
     const std::size_t j = blockIdx.x * blockDim.x + threadIdx.x;
     const std::size_t idx = i * Nx + j;
 
-    const float center = T_curr[idx];
-    const float left   = (j > 0) ? T_curr[idx - 1] : 0.0f;
-    const float right  = (j < Nx - 1) ? T_curr[idx + 1] : 0.0f;
-    const float up     = (i > 0) ? T_curr[idx - Nx] : 0.0f;
-    const float down   = (i < Ny - 1) ? T_curr[idx + Nx] : 0.0f;
+    if ((i < Ny) && (j < Nx)) {
+        const float center = T_curr[idx];
+        const float left   = (j > 0) ? T_curr[idx - 1] : 0.0f;
+        const float right  = (j < Nx - 1) ? T_curr[idx + 1] : 0.0f;
+        const float up     = (i > 0) ? T_curr[idx - Nx] : 0.0f;
+        const float down   = (i < Ny - 1) ? T_curr[idx + Nx] : 0.0f;
 
-    T_next[idx] = cs * center + rx * (left + right) + ry * (up + down);
+        T_next[idx] = cs * center + rx * (left + right) + ry * (up + down);
+    }
 }
 
 
@@ -31,10 +33,10 @@ SolvResult solve_cuda_naive(
     const std::vector<float>& T_init,
     std::size_t Nx,
     std::size_t Ny,
+    float alpha,
     float delta_x,
     float delta_y,
     float delta_t,
-    float alpha,
     std::size_t steps,
     std::size_t block_size
 ) {

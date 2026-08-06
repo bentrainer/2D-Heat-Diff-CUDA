@@ -88,8 +88,9 @@ int main(int argc, char** argv) {
     if (verify && backend != "cpu") {
         auto result = solve_cpu(
             T_init,
-            Nx, Ny, delta_x, delta_y,
-            delta_t, alpha, steps
+            Nx, Ny, alpha,
+            delta_x, delta_y,
+            delta_t, steps
         );
         auto T_comp = result.temperature;
 
