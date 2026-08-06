@@ -45,11 +45,13 @@ $$
 
 - [x] naive single-threaded CPU for-loop baseline
 
-- [ ] CUDA naive global-memory implementation
+- [x] CUDA naive global-memory implementation
 
 - [ ] CUDA shared-memory tiled implementation
 
 - [ ] CUDA thread-coarsened implementation
+
+- [ ] Nsight profile
 
 ### Optional comparison
 
