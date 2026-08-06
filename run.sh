@@ -3,4 +3,12 @@
 module load cuda11.8/toolkit
 cd "${PBS_O_WORKDIR:-.}"
 
-./build/heat2d --backend cuda-naive --verify
+# ./build/heat2d --backend cuda-naive --verify
+# ./build/heat2d --backend cuda-naive --Nx 1024 --Ny 2048 --verify
+
+# ./build/heat2d --backend cuda-naive --steps 100 --Nx 4096 --Ny 4096
+
+./build/heat2d --backend cuda-tiled --verify
+
+./build/heat2d --backend cuda-naive --steps 100 --Nx 8192 --Ny 8192
+./build/heat2d --backend cuda-tiled --steps 100 --Nx 8192 --Ny 8192

@@ -29,6 +29,18 @@ SolvResult solve_cuda_naive(
     std::size_t block_size
 );
 
+SolvResult solve_cuda_tiled(
+    const std::vector<float>& T_init,
+    std::size_t Nx,
+    std::size_t Ny,
+    float alpha,
+    float delta_x,
+    float delta_y,
+    float delta_t,
+    std::size_t steps,
+    std::size_t block_size
+);
+
 
 inline bool all_close(
     const std::vector<float>& A,

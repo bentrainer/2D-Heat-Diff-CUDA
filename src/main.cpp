@@ -13,8 +13,11 @@ int main(int argc, char** argv) {
     argv = app.ensure_utf8(argv);
 
     std::string backend = "cpu";
-    app.add_option("-b,--backend", backend, "compute backend: cpu, cuda-naive")->check(
-        CLI::IsMember({"cpu", "cuda-naive"})
+    app.add_option(
+        "-b,--backend", backend,
+        "compute backend: cpu, cuda-naive, cuda-tiled"
+    )->check(
+        CLI::IsMember({"cpu", "cuda-naive", "cuda-tiled"})
     );
 
     float width = 1.0f, height = 1.0f;
@@ -72,6 +75,16 @@ int main(int argc, char** argv) {
     } else if (backend == "cuda-naive") {
         solve_impl = [&](const std::vector<float>& T) {
             return solve_cuda_naive(
+                T,
+                Nx, Ny, alpha,
+                delta_x, delta_y,
+                delta_t, steps,
+                block_size
+            );
+        };
+    } else if (backend == "cuda-tiled") {
+        solve_impl = [&](const std::vector<float>& T) {
+            return solve_cuda_tiled(
                 T,
                 Nx, Ny, alpha,
                 delta_x, delta_y,
