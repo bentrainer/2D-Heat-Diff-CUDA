@@ -4,11 +4,11 @@
 
 using Clock = std::chrono::steady_clock;
 
-inline double elapsed_us(
+inline double elapsed_ms(
     Clock::time_point begin,
     Clock::time_point end
 ) {
-    return std::chrono::duration<double, std::micro>(
+    return std::chrono::duration<double, std::milli>(
         end - begin
     ).count();
 }

@@ -78,11 +78,11 @@ SolvResult solve_cuda_common(
     const auto t_func_end = Clock::now();
 
 
-    result.elapsed_us_setup = elapsed_us(t_func_begin, t_setup_end);
-    result.elapsed_us_h2d = elapsed_us(t_h2d_begin, t_h2d_end);
-    result.elapsed_us_comp = static_cast<double>(elapsed_ms_comp) * 1000.0;
-    result.elapsed_us_d2h = elapsed_us(t_d2h_begin, t_d2h_end);
-    result.elapsed_us_total = elapsed_us(t_func_begin, t_func_end);
+    result.elapsed_ms_setup = elapsed_ms(t_func_begin, t_setup_end);
+    result.elapsed_ms_h2d = elapsed_ms(t_h2d_begin, t_h2d_end);
+    result.elapsed_ms_comp = static_cast<double>(elapsed_ms_comp);
+    result.elapsed_ms_d2h = elapsed_ms(t_d2h_begin, t_d2h_end);
+    result.elapsed_ms_total = elapsed_ms(t_func_begin, t_func_end);
 
     return result;
 }

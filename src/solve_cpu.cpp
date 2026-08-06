@@ -56,12 +56,12 @@ SolvResult solve_cpu(
 
     const auto t_func_end = Clock::now();
 
-    result.elapsed_us_setup = elapsed_us(t_func_begin, t_setup_end);
-    result.elapsed_us_comp = elapsed_us(t_setup_end, t_comp_end);
-    result.elapsed_us_total = elapsed_us(t_func_begin, t_func_end);
+    result.elapsed_ms_setup = elapsed_ms(t_func_begin, t_setup_end);
+    result.elapsed_ms_comp = elapsed_ms(t_setup_end, t_comp_end);
+    result.elapsed_ms_total = elapsed_ms(t_func_begin, t_func_end);
 
-    result.elapsed_us_h2d = 0.0;
-    result.elapsed_us_d2h = 0.0;
+    result.elapsed_ms_h2d = 0.0;
+    result.elapsed_ms_d2h = 0.0;
 
     return result;
 }
