@@ -37,7 +37,6 @@ SolvResult solve_cuda_common(
 
     CUDA_CHECK(cudaEventCreate(&event_begin));
     CUDA_CHECK(cudaEventCreate(&event_end));
-    CUDA_CHECK(cudaEventRecord(event_begin));
 
     const auto t_setup_end = Clock::now();
     const auto t_h2d_begin = Clock::now();
@@ -47,6 +46,8 @@ SolvResult solve_cuda_common(
     // CUDA_CHECK(cudaMemset(T_next_d, 0, bytes));
 
     const auto t_h2d_end = Clock::now();
+
+    CUDA_CHECK(cudaEventRecord(event_begin));
 
     // run solver kernel
     for (std::size_t step = 0; step < steps; ++step) {
