@@ -15,9 +15,16 @@ cd "${PBS_O_WORKDIR:-.}"
 # ./build/heat2d --backend cuda-naive --steps 100 --Nx 8192 --Ny 8192
 # ./build/heat2d --backend cuda-tiled --steps 100 --Nx 8192 --Ny 8192
 
-./build/heat2d --backend cuda-coarsen --verify
+# ./build/heat2d --backend cuda-coarsen --verify
 
-./build/heat2d --backend cuda-tiled --steps 100 --Nx 8192 --Ny 8192
-./build/heat2d --backend cuda-coarsen --steps 100 --Nx 8192 --Ny 8192 --cfactor 1
-./build/heat2d --backend cuda-coarsen --steps 100 --Nx 8192 --Ny 8192 --cfactor 2
-./build/heat2d --backend cuda-coarsen --steps 100 --Nx 8192 --Ny 8192 --cfactor 3
+# ./build/heat2d --backend cuda-tiled --steps 100 --Nx 32768 --Ny 32768
+# ./build/heat2d --backend cuda-coarsen --steps 100 --Nx 32768 --Ny 32768 --cfactor 1
+# ./build/heat2d --backend cuda-coarsen --steps 100 --Nx 32768 --Ny 32768 --cfactor 2
+# ./build/heat2d --backend cuda-coarsen --steps 100 --Nx 32768 --Ny 32768 --cfactor 3
+
+./build/heat2d --backend cuda-tiled-coarsen --verify
+
+./build/heat2d --backend cuda-tiled --steps 100 --Nx 32768 --Ny 32768
+./build/heat2d --backend cuda-coarsen --steps 100 --Nx 32768 --Ny 32768 --cfactor 1
+./build/heat2d --backend cuda-coarsen --steps 100 --Nx 32768 --Ny 32768 --cfactor 2
+./build/heat2d --backend cuda-coarsen --steps 100 --Nx 32768 --Ny 32768 --cfactor 3

@@ -15,9 +15,9 @@ int main(int argc, char** argv) {
     std::string backend = "cpu";
     app.add_option(
         "-b,--backend", backend,
-        "compute backend: cpu, cuda-naive, cuda-tiled, cuda-coarsen"
+        "compute backend: cpu, cuda-naive, cuda-tiled, cuda-coarsen, cuda-tiled-coarsen"
     )->check(
-        CLI::IsMember({"cpu", "cuda-naive", "cuda-tiled", "cuda-coarsen"})
+        CLI::IsMember({"cpu", "cuda-naive", "cuda-tiled", "cuda-coarsen", "cuda-tiled-coarsen"})
     );
 
     float width = 1.0f, height = 1.0f;
@@ -98,6 +98,17 @@ int main(int argc, char** argv) {
     } else if (backend == "cuda-coarsen") {
         solve_impl = [&](const std::vector<float>& T) {
             return solve_cuda_coarsen(
+                T,
+                Nx, Ny, alpha,
+                delta_x, delta_y,
+                delta_t, steps,
+                block_size,
+                cfactor
+            );
+        };
+    } else if (backend == "cuda-tiled-coarsen") {
+        solve_impl = [&](const std::vector<float>& T) {
+            return solve_cuda_tiled_coarsen(
                 T,
                 Nx, Ny, alpha,
                 delta_x, delta_y,
