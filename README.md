@@ -51,6 +51,8 @@ $$
 
 - [x] CUDA thread-coarsened implementation
 
+- [x] CUDA tiled-coarsened implementation
+
 - [ ] Nsight profile
 
 ### Optional comparison
