@@ -47,9 +47,9 @@ $$
 
 - [x] CUDA naive global-memory implementation
 
-- [ ] CUDA shared-memory tiled implementation
+- [x] CUDA shared-memory tiled implementation
 
-- [ ] CUDA thread-coarsened implementation
+- [x] CUDA thread-coarsened implementation
 
 - [ ] Nsight profile
 
